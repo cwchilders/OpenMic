@@ -1,0 +1,802 @@
+================================================================================
+TONEX PRESET PARAMETER MODEL
+================================================================================
+
+Total Parameters: 129
+
+
+================================================================================
+METADATA BLOCK (19 parameters)
+================================================================================
+Preset identification and organizational tags
+
+  GUID
+    Type: varchar(32)
+    Desc: Globally Unique Identifier for this preset
+    Range: 32-character hex string
+
+  Version
+    Type: tinyint(10)
+    Desc: Preset format version
+    Range: Usually 3
+    Notes: Default: 1
+
+  ToneModel_GUID
+    Type: varchar(32)
+    Desc: Reference to the amp model tone capture
+    Range: 32-character hex string
+
+  OptionalToneModel_GUID
+    Type: varchar(32)
+    Desc: Optional secondary tone model for blending
+    Range: 32-character hex string or empty
+
+  Tag_PresetName
+    Type: varchar(32)
+    Desc: Display name of the preset (PRIMARY KEY)
+    Range: Max 32 chars
+    Notes: Must be unique
+
+  Tag_UserName
+    Type: varchar(32)
+    Desc: Name of preset creator/user
+    Range: Max 32 chars
+
+  Tag_ModelerTags
+    Type: varchar(32)
+    Desc: Custom tags for organization
+    Range: Max 32 chars
+
+  Tag_Date
+    Type: date
+    Desc: Creation/modification date
+    Range: ISO date format
+
+  Tag_ModelCategory
+    Type: varchar(32)
+    Desc: Amp category classification
+    Range: CLEAN, DRIVE, CRUNCH, FUZZY, etc.
+
+  Tag_Instrument
+    Type: varchar(32)
+    Desc: Target instrument type
+    Range: Electric Guitar, Bass, etc.
+
+  Tag_InstrumentType
+    Type: varchar(32)
+    Desc: Specific instrument model
+    Range: Solid Body, Semi-Hollow, etc.
+
+  Tag_PickupPosition
+    Type: varchar(32)
+    Desc: Guitar pickup selector position
+    Range: Bridge, Neck, Middle, None
+
+  Tag_PickupType
+    Type: varchar(32)
+    Desc: Pickup configuration
+    Range: H-H (LP), S-S-S, H-S-H, etc.
+
+  Tag_Artist
+    Type: varchar(32)
+    Desc: Associated artist name
+    Range: Max 32 chars
+
+  Tag_Album
+    Type: varchar(32)
+    Desc: Associated album name
+    Range: Max 32 chars
+
+  Tag_Song
+    Type: varchar(32)
+    Desc: Associated song title
+    Range: Max 32 chars
+
+  Tag_SongPart
+    Type: varchar(32)
+    Desc: Song section reference
+    Range: Verse, Chorus, Solo, etc.
+
+  Tag_Genre
+    Type: varchar(32)
+    Desc: Musical genre classification
+    Range: Rock, Jazz, Metal, Blues, etc.
+
+  Tag_Description
+    Type: varchar(64)
+    Desc: Preset description or notes
+    Range: Max 64 chars
+
+
+================================================================================
+AMP MODEL BLOCK (7 parameters)
+================================================================================
+Core amplifier tone and gain staging controls
+
+  ModelEnable
+    Type: tinyint(10)
+    Desc: Enable/bypass the amp model
+    Range: 0=off, 1=on
+
+  ModelMix
+    Type: float(24)
+    Desc: Wet/dry blend of processed signal
+    Range: 0.0-100.0%
+    Notes: 100% = fully processed tone
+
+  ModelGain
+    Type: float(24)
+    Desc: Input gain/drive amount
+    Range: 0.0-10.0
+    Notes: Controls amp saturation/distortion
+
+  ModelVolume
+    Type: float(24)
+    Desc: Output level/master volume
+    Range: 0.0-10.0
+    Notes: Final amp output level
+
+  PwrAmpEqPresence
+    Type: float(24)
+    Desc: Power amp presence control (high-end clarity)
+    Range: 0.0-10.0
+    Notes: Adds brightness and air
+
+  PwrAmpEqDepth
+    Type: float(24)
+    Desc: Power amp resonance/depth (low-end)
+    Range: 0.0-10.0
+    Notes: Adds bass response and thump
+
+  BPM
+    Type: float(24)
+    Desc: Tempo reference for time-based effects
+    Range: 20.0-999.0 BPM
+    Notes: Used for sync'ed delays/modulation
+
+
+================================================================================
+EQ BLOCK (8 parameters)
+================================================================================
+3-band parametric equalizer with frequency control
+
+  EqPost
+    Type: tinyint(10)
+    Desc: EQ placement in signal chain
+    Range: 0=pre-amp, 1=post-amp
+    Notes: Affects tonal character significantly
+
+  EqBass
+    Type: float(24)
+    Desc: Bass boost/cut amount
+    Range: -10.0 to +10.0 dB
+    Notes: Low frequency control
+
+  EqBassFreq
+    Type: float(24)
+    Desc: Bass center frequency
+    Range: 20.0-2000.0 Hz
+    Notes: Typical: 80-400 Hz
+
+  EqMid
+    Type: float(24)
+    Desc: Midrange boost/cut amount
+    Range: -10.0 to +10.0 dB
+    Notes: Most critical for tone shaping
+
+  EqMidQ
+    Type: float(24)
+    Desc: Midrange bandwidth/Q factor
+    Range: 0.1-10.0
+    Notes: Lower Q = wider, Higher Q = narrower
+
+  EqMidFreq
+    Type: float(24)
+    Desc: Midrange center frequency
+    Range: 200.0-5000.0 Hz
+    Notes: Typical: 500-2000 Hz
+
+  EqTreble
+    Type: float(24)
+    Desc: Treble boost/cut amount
+    Range: -10.0 to +10.0 dB
+    Notes: High frequency control
+
+  EqTrebleFreq
+    Type: float(24)
+    Desc: Treble center frequency
+    Range: 1000.0-20000.0 Hz
+    Notes: Typical: 2000-8000 Hz
+
+
+================================================================================
+COMPRESSION BLOCK (5 parameters)
+================================================================================
+Dynamic range compression for sustain and level control
+
+  CompPost
+    Type: tinyint(10)
+    Desc: Compressor placement in signal chain
+    Range: 0=pre-amp, 1=post-amp
+
+  CompEnable
+    Type: tinyint(10)
+    Desc: Enable/bypass compressor
+    Range: 0=off, 1=on
+
+  CompThreshold
+    Type: float(24)
+    Desc: Compression threshold level
+    Range: -60.0 to 0.0 dB
+    Notes: Signals above this level are compressed
+
+  CompMakeUp
+    Type: float(24)
+    Desc: Make-up gain after compression
+    Range: -20.0 to +20.0 dB
+    Notes: Compensates for volume reduction
+
+  CompAttack
+    Type: float(24)
+    Desc: Attack time (how quickly compression engages)
+    Range: 0.1-100.0 ms
+    Notes: Faster = more pick attack reduction
+
+
+================================================================================
+NOISE GATE BLOCK (5 parameters)
+================================================================================
+Noise reduction and signal gating
+
+  NoiseGatePost
+    Type: tinyint(10)
+    Desc: Noise gate placement in signal chain
+    Range: 0=pre-amp, 1=post-amp
+    Notes: Post is typical for high-gain
+
+  NoiseGateEnable
+    Type: tinyint(10)
+    Desc: Enable/bypass noise gate
+    Range: 0=off, 1=on
+
+  NoiseGateThreshold
+    Type: float(24)
+    Desc: Gate threshold level
+    Range: -100.0 to 0.0 dB
+    Notes: Signals below this are attenuated
+
+  NoiseGateRelease
+    Type: float(24)
+    Desc: Release time (how quickly gate closes)
+    Range: 0.0-1000.0 ms
+    Notes: Longer = more natural decay
+
+  NoiseGateDepth
+    Type: float(24)
+    Desc: Attenuation amount when gate is closed
+    Range: -100.0 to 0.0 dB
+    Notes: How much noise is reduced
+
+
+================================================================================
+MODULATION BLOCK (31 parameters)
+================================================================================
+Chorus, tremolo, phaser, flanger, and rotary effects
+
+  ModPost
+    Type: tinyint(10)
+    Desc: Modulation placement in signal chain
+    Range: 0=pre-amp, 1=post-amp
+
+  ModEnable
+    Type: tinyint(10)
+    Desc: Enable/bypass modulation effect
+    Range: 0=off, 1=on
+
+  ModModel
+    Type: tinyint(10)
+    Desc: Modulation effect type selector
+    Range: 0=chorus, 1=tremolo, 2=phaser, 3=flanger, 4=rotary
+
+  ModChorusSync
+    Type: tinyint(10)
+    Desc: Sync chorus rate to BPM
+    Range: 0=off, 1=on
+
+  ModChorusTS
+    Type: tinyint(10)
+    Desc: Chorus time signature division
+    Range: 0-15
+    Notes: For tempo sync (quarter, eighth, etc.)
+
+  ModChorusRate
+    Type: float(24)
+    Desc: Chorus modulation speed
+    Range: 0.0-20.0 Hz
+    Notes: LFO rate
+
+  ModChorusDepth
+    Type: float(24)
+    Desc: Chorus modulation depth
+    Range: 0.0-100.0%
+    Notes: Amount of pitch variation
+
+  ModChorusLevel
+    Type: float(24)
+    Desc: Chorus effect mix level
+    Range: 0.0-100.0%
+    Notes: Wet signal amount
+
+  ModTremoloSync
+    Type: tinyint(10)
+    Desc: Sync tremolo rate to BPM
+    Range: 0=off, 1=on
+
+  ModTremoloTS
+    Type: tinyint(10)
+    Desc: Tremolo time signature division
+    Range: 0-15
+
+  ModTremoloRate
+    Type: float(24)
+    Desc: Tremolo modulation speed
+    Range: 0.0-20.0 Hz
+    Notes: Volume oscillation rate
+
+  ModTremoloShape
+    Type: float(24)
+    Desc: Tremolo waveform shape
+    Range: 0.0-100.0%
+    Notes: Sine to square wave
+
+  ModTremoloSpread
+    Type: float(24)
+    Desc: Tremolo stereo spread
+    Range: 0.0-100.0%
+    Notes: Stereo width
+
+  ModTremoloLevel
+    Type: float(24)
+    Desc: Tremolo effect intensity
+    Range: 0.0-100.0%
+    Notes: Modulation depth
+
+  ModPhaserSync
+    Type: tinyint(10)
+    Desc: Sync phaser rate to BPM
+    Range: 0=off, 1=on
+
+  ModPhaserTS
+    Type: tinyint(10)
+    Desc: Phaser time signature division
+    Range: 0-15
+
+  ModPhaserRate
+    Type: float(24)
+    Desc: Phaser sweep speed
+    Range: 0.0-20.0 Hz
+    Notes: LFO rate
+
+  ModPhaserDepth
+    Type: float(24)
+    Desc: Phaser sweep range
+    Range: 0.0-100.0%
+    Notes: Frequency sweep amount
+
+  ModPhaserLevel
+    Type: float(24)
+    Desc: Phaser effect mix level
+    Range: 0.0-100.0%
+
+  ModFlangerSync
+    Type: tinyint(10)
+    Desc: Sync flanger rate to BPM
+    Range: 0=off, 1=on
+
+  ModFlangerTS
+    Type: tinyint(10)
+    Desc: Flanger time signature division
+    Range: 0-15
+
+  ModFlangerRate
+    Type: float(24)
+    Desc: Flanger sweep speed
+    Range: 0.0-20.0 Hz
+
+  ModFlangerDepth
+    Type: float(24)
+    Desc: Flanger delay modulation depth
+    Range: 0.0-100.0%
+
+  ModFlangerFeedback
+    Type: float(24)
+    Desc: Flanger resonance/feedback
+    Range: 0.0-100.0%
+    Notes: Increases jet-plane effect
+
+  ModFlangerLevel
+    Type: float(24)
+    Desc: Flanger effect mix level
+    Range: 0.0-100.0%
+
+  ModRotarySync
+    Type: tinyint(10)
+    Desc: Sync rotary speed to BPM
+    Range: 0=off, 1=on
+
+  ModRotaryTS
+    Type: tinyint(10)
+    Desc: Rotary time signature division
+    Range: 0-15
+
+  ModRotarySpeed
+    Type: float(24)
+    Desc: Rotary speaker speed
+    Range: 0.0-1000.0 RPM
+    Notes: Simulates fast/slow switch
+
+  ModRotaryRadius
+    Type: float(24)
+    Desc: Rotary speaker horn radius
+    Range: 0.0-200.0
+    Notes: Affects doppler shift
+
+  ModRotarySpread
+    Type: float(24)
+    Desc: Rotary stereo spread
+    Range: 0.0-100.0%
+
+  ModRotaryLevel
+    Type: float(24)
+    Desc: Rotary effect mix level
+    Range: 0.0-100.0%
+
+
+================================================================================
+DELAY BLOCK (15 parameters)
+================================================================================
+Digital and tape echo effects
+
+  DelayPost
+    Type: tinyint(10)
+    Desc: Delay placement in signal chain
+    Range: 0=pre-amp, 1=post-amp
+    Notes: Post is standard
+
+  DelayEnable
+    Type: tinyint(10)
+    Desc: Enable/bypass delay
+    Range: 0=off, 1=on
+
+  DelayModel
+    Type: tinyint(10)
+    Desc: Delay type selector
+    Range: 0=digital, 1=tape
+    Notes: Tape adds warmth and saturation
+
+  DelayDigitalSync
+    Type: tinyint(10)
+    Desc: Sync digital delay to BPM
+    Range: 0=off, 1=on
+
+  DelayDigitalTS
+    Type: tinyint(10)
+    Desc: Digital delay time signature division
+    Range: 0-15
+    Notes: Quarter, eighth, dotted, etc.
+
+  DelayDigitalTime
+    Type: float(24)
+    Desc: Digital delay time
+    Range: 0.0-2000.0 ms
+    Notes: Echo spacing
+
+  DelayDigitalFeedback
+    Type: float(24)
+    Desc: Digital delay feedback/repeats
+    Range: 0.0-100.0%
+    Notes: Number of echoes
+
+  DelayDigitalMode
+    Type: tinyint(10)
+    Desc: Digital delay mode
+    Range: 0-9
+    Notes: Mono, stereo, ping-pong variations
+
+  DelayDigitalMix
+    Type: float(24)
+    Desc: Digital delay wet/dry mix
+    Range: 0.0-100.0%
+    Notes: Effect level
+
+  DelayTapeSync
+    Type: tinyint(10)
+    Desc: Sync tape delay to BPM
+    Range: 0=off, 1=on
+
+  DelayTapeTS
+    Type: tinyint(10)
+    Desc: Tape delay time signature division
+    Range: 0-15
+
+  DelayTapeTime
+    Type: float(24)
+    Desc: Tape delay time
+    Range: 0.0-2000.0 ms
+
+  DelayTapeFeedback
+    Type: float(24)
+    Desc: Tape delay feedback/repeats
+    Range: 0.0-100.0%
+    Notes: With tape saturation
+
+  DelayTapeMode
+    Type: tinyint(10)
+    Desc: Tape delay mode
+    Range: 0-9
+    Notes: Various tape head configurations
+
+  DelayTapeMix
+    Type: float(24)
+    Desc: Tape delay wet/dry mix
+    Range: 0.0-100.0%
+
+
+================================================================================
+REVERB BLOCK (27 parameters)
+================================================================================
+Spring, room, and plate reverb effects
+
+  ReverbPosition
+    Type: tinyint(10)
+    Desc: Reverb placement in signal chain
+    Range: 0=pre-amp, 1=post-amp
+    Notes: Post is standard
+
+  ReverbEnable
+    Type: tinyint(10)
+    Desc: Enable/bypass reverb
+    Range: 0=off, 1=on
+
+  ReverbModel
+    Type: int
+    Desc: Reverb type selector
+    Range: 4=spring, 5=room, 6=plate
+    Notes: Different reverb algorithms
+
+  ReverbSpring1Time
+    Type: float(24)
+    Desc: Spring 1 reverb decay time
+    Range: 0.0-10.0 seconds
+    Notes: How long reverb tail lasts
+
+  ReverbSpring1PreDelay
+    Type: float(24)
+    Desc: Spring 1 pre-delay time
+    Range: 0.0-200.0 ms
+    Notes: Gap before reverb starts
+
+  ReverbSpring1Color
+    Type: float(24)
+    Desc: Spring 1 tone color (damping)
+    Range: -10.0 to +10.0
+    Notes: Darker to brighter
+
+  ReverbSpring1Mix
+    Type: float(24)
+    Desc: Spring 1 wet/dry mix
+    Range: 0.0-100.0%
+    Notes: Effect level
+
+  ReverbSpring2Time
+    Type: float(24)
+    Desc: Spring 2 reverb decay time
+    Range: 0.0-10.0 seconds
+    Notes: How long reverb tail lasts
+
+  ReverbSpring2PreDelay
+    Type: float(24)
+    Desc: Spring 2 pre-delay time
+    Range: 0.0-200.0 ms
+    Notes: Gap before reverb starts
+
+  ReverbSpring2Color
+    Type: float(24)
+    Desc: Spring 2 tone color (damping)
+    Range: -10.0 to +10.0
+    Notes: Darker to brighter
+
+  ReverbSpring2Mix
+    Type: float(24)
+    Desc: Spring 2 wet/dry mix
+    Range: 0.0-100.0%
+    Notes: Effect level
+
+  ReverbSpring3Time
+    Type: float(24)
+    Desc: Spring 3 reverb decay time
+    Range: 0.0-10.0 seconds
+    Notes: How long reverb tail lasts
+
+  ReverbSpring3PreDelay
+    Type: float(24)
+    Desc: Spring 3 pre-delay time
+    Range: 0.0-200.0 ms
+    Notes: Gap before reverb starts
+
+  ReverbSpring3Color
+    Type: float(24)
+    Desc: Spring 3 tone color (damping)
+    Range: -10.0 to +10.0
+    Notes: Darker to brighter
+
+  ReverbSpring3Mix
+    Type: float(24)
+    Desc: Spring 3 wet/dry mix
+    Range: 0.0-100.0%
+    Notes: Effect level
+
+  ReverbSpring4Time
+    Type: float(24)
+    Desc: Spring 4 reverb decay time
+    Range: 0.0-10.0 seconds
+    Notes: How long reverb tail lasts
+
+  ReverbSpring4PreDelay
+    Type: float(24)
+    Desc: Spring 4 pre-delay time
+    Range: 0.0-200.0 ms
+    Notes: Gap before reverb starts
+
+  ReverbSpring4Color
+    Type: float(24)
+    Desc: Spring 4 tone color (damping)
+    Range: -10.0 to +10.0
+    Notes: Darker to brighter
+
+  ReverbSpring4Mix
+    Type: float(24)
+    Desc: Spring 4 wet/dry mix
+    Range: 0.0-100.0%
+    Notes: Effect level
+
+  ReverbRoomTime
+    Type: float(24)
+    Desc: Room reverb decay time
+    Range: 0.0-10.0 seconds
+    Notes: Room size simulation
+
+  ReverbRoomPreDelay
+    Type: float(24)
+    Desc: Room reverb pre-delay time
+    Range: 0.0-200.0 ms
+
+  ReverbRoomColor
+    Type: float(24)
+    Desc: Room reverb tone color
+    Range: -10.0 to +10.0
+
+  ReverbRoomMix
+    Type: float(24)
+    Desc: Room reverb wet/dry mix
+    Range: 0.0-100.0%
+
+  ReverbPlateTime
+    Type: float(24)
+    Desc: Plate reverb decay time
+    Range: 0.0-10.0 seconds
+    Notes: Smooth, dense reverb
+
+  ReverbPlatePreDelay
+    Type: float(24)
+    Desc: Plate reverb pre-delay time
+    Range: 0.0-200.0 ms
+
+  ReverbPlateColor
+    Type: float(24)
+    Desc: Plate reverb tone color
+    Range: -10.0 to +10.0
+
+  ReverbPlateMix
+    Type: float(24)
+    Desc: Plate reverb wet/dry mix
+    Range: 0.0-100.0%
+
+
+================================================================================
+CABINET BLOCK (10 parameters)
+================================================================================
+Speaker cabinet simulation and microphone modeling
+
+  CabType
+    Type: int
+    Desc: Cabinet simulation type
+    Range: 0=VIR (Virtual), 2=Classic
+    Notes: VIR is more advanced modeling
+
+  VIRCabModel
+    Type: int
+    Desc: VIR cabinet model selection
+    Range: 0-99
+    Notes: Different speaker cabinet types
+
+  VIRCabMic1Model
+    Type: int
+    Desc: Microphone 1 model type
+    Range: 0-50
+    Notes: SM57, condenser, ribbon, etc.
+
+  VIRCabMic1X
+    Type: float(24)
+    Desc: Microphone 1 horizontal position
+    Range: -2.0 to +2.0
+    Notes: Off-axis to on-axis placement
+
+  VIRCabMic1Z
+    Type: float(24)
+    Desc: Microphone 1 distance from speaker
+    Range: 0.0-10.0
+    Notes: Close-mic to room-mic
+
+  VIRCabMic2Model
+    Type: int
+    Desc: Microphone 2 model type
+    Range: 0-50
+    Notes: For dual-mic setups
+
+  VIRCabMic2X
+    Type: float(24)
+    Desc: Microphone 2 horizontal position
+    Range: -2.0 to +2.0
+
+  VIRCabMic2Z
+    Type: float(24)
+    Desc: Microphone 2 distance from speaker
+    Range: 0.0-10.0
+
+  VIRCabMicBlend
+    Type: float(24)
+    Desc: Blend between microphone 1 and 2
+    Range: 0.0-100.0%
+    Notes: 0% = all mic 1, 100% = all mic 2
+
+  VIRCabResonance
+    Type: float(24)
+    Desc: Cabinet resonance/air movement
+    Range: 0.0-10.0
+    Notes: Low-end cabinet thump
+
+
+================================================================================
+OTHER BLOCK (2 parameters)
+================================================================================
+Additional preset settings
+
+  HW_ExtControllerEnable
+    Type: tinyint(10)
+    Desc: Enable external hardware controller integration
+    Range: 0=off, 1=on
+    Notes: For MIDI/expression pedal control
+
+  Favorite
+    Type: tinyint(10)
+    Desc: Mark preset as favorite
+    Range: 0=no, 1=yes
+    Notes: For quick access/filtering
+
+
+================================================================================
+PARAMETER SUMMARY BY BLOCK
+================================================================================
+  metadata            :  19 parameters
+  amp_model           :   7 parameters
+  eq                  :   8 parameters
+  compression         :   5 parameters
+  noise_gate          :   5 parameters
+  modulation          :  31 parameters
+  delay               :  15 parameters
+  reverb              :  27 parameters
+  cabinet             :  10 parameters
+  other               :   2 parameters
+  TOTAL               : 129 parameters
+

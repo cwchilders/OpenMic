@@ -1,0 +1,970 @@
+{
+  "model_name": "ToneX Preset Parameter Model",
+  "version": "1.0",
+  "total_parameters": 129,
+  "blocks": {
+    "metadata": {
+      "block_name": "Metadata",
+      "block_description": "Preset identification and organizational tags",
+      "parameters": [
+        {
+          "name": "GUID",
+          "type": "varchar(32)",
+          "description": "Globally Unique Identifier for this preset",
+          "range": "32-character hex string",
+          "notes": ""
+        },
+        {
+          "name": "Version",
+          "type": "tinyint(10)",
+          "description": "Preset format version",
+          "range": "Usually 3",
+          "notes": "Default: 1"
+        },
+        {
+          "name": "ToneModel_GUID",
+          "type": "varchar(32)",
+          "description": "Reference to the amp model tone capture",
+          "range": "32-character hex string",
+          "notes": ""
+        },
+        {
+          "name": "OptionalToneModel_GUID",
+          "type": "varchar(32)",
+          "description": "Optional secondary tone model for blending",
+          "range": "32-character hex string or empty",
+          "notes": ""
+        },
+        {
+          "name": "Tag_PresetName",
+          "type": "varchar(32)",
+          "description": "Display name of the preset (PRIMARY KEY)",
+          "range": "Max 32 chars",
+          "notes": "Must be unique"
+        },
+        {
+          "name": "Tag_UserName",
+          "type": "varchar(32)",
+          "description": "Name of preset creator/user",
+          "range": "Max 32 chars",
+          "notes": ""
+        },
+        {
+          "name": "Tag_ModelerTags",
+          "type": "varchar(32)",
+          "description": "Custom tags for organization",
+          "range": "Max 32 chars",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Date",
+          "type": "date",
+          "description": "Creation/modification date",
+          "range": "ISO date format",
+          "notes": ""
+        },
+        {
+          "name": "Tag_ModelCategory",
+          "type": "varchar(32)",
+          "description": "Amp category classification",
+          "range": "CLEAN, DRIVE, CRUNCH, FUZZY, etc.",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Instrument",
+          "type": "varchar(32)",
+          "description": "Target instrument type",
+          "range": "Electric Guitar, Bass, etc.",
+          "notes": ""
+        },
+        {
+          "name": "Tag_InstrumentType",
+          "type": "varchar(32)",
+          "description": "Specific instrument model",
+          "range": "Solid Body, Semi-Hollow, etc.",
+          "notes": ""
+        },
+        {
+          "name": "Tag_PickupPosition",
+          "type": "varchar(32)",
+          "description": "Guitar pickup selector position",
+          "range": "Bridge, Neck, Middle, None",
+          "notes": ""
+        },
+        {
+          "name": "Tag_PickupType",
+          "type": "varchar(32)",
+          "description": "Pickup configuration",
+          "range": "H-H (LP), S-S-S, H-S-H, etc.",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Artist",
+          "type": "varchar(32)",
+          "description": "Associated artist name",
+          "range": "Max 32 chars",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Album",
+          "type": "varchar(32)",
+          "description": "Associated album name",
+          "range": "Max 32 chars",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Song",
+          "type": "varchar(32)",
+          "description": "Associated song title",
+          "range": "Max 32 chars",
+          "notes": ""
+        },
+        {
+          "name": "Tag_SongPart",
+          "type": "varchar(32)",
+          "description": "Song section reference",
+          "range": "Verse, Chorus, Solo, etc.",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Genre",
+          "type": "varchar(32)",
+          "description": "Musical genre classification",
+          "range": "Rock, Jazz, Metal, Blues, etc.",
+          "notes": ""
+        },
+        {
+          "name": "Tag_Description",
+          "type": "varchar(64)",
+          "description": "Preset description or notes",
+          "range": "Max 64 chars",
+          "notes": ""
+        }
+      ]
+    },
+    "amp_model": {
+      "block_name": "Amp Model",
+      "block_description": "Core amplifier tone and gain staging controls",
+      "parameters": [
+        {
+          "name": "ModelEnable",
+          "type": "tinyint(10)",
+          "description": "Enable/bypass the amp model",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModelMix",
+          "type": "float(24)",
+          "description": "Wet/dry blend of processed signal",
+          "range": "0.0-100.0%",
+          "notes": "100% = fully processed tone"
+        },
+        {
+          "name": "ModelGain",
+          "type": "float(24)",
+          "description": "Input gain/drive amount",
+          "range": "0.0-10.0",
+          "notes": "Controls amp saturation/distortion"
+        },
+        {
+          "name": "ModelVolume",
+          "type": "float(24)",
+          "description": "Output level/master volume",
+          "range": "0.0-10.0",
+          "notes": "Final amp output level"
+        },
+        {
+          "name": "PwrAmpEqPresence",
+          "type": "float(24)",
+          "description": "Power amp presence control (high-end clarity)",
+          "range": "0.0-10.0",
+          "notes": "Adds brightness and air"
+        },
+        {
+          "name": "PwrAmpEqDepth",
+          "type": "float(24)",
+          "description": "Power amp resonance/depth (low-end)",
+          "range": "0.0-10.0",
+          "notes": "Adds bass response and thump"
+        },
+        {
+          "name": "BPM",
+          "type": "float(24)",
+          "description": "Tempo reference for time-based effects",
+          "range": "20.0-999.0 BPM",
+          "notes": "Used for sync'ed delays/modulation"
+        }
+      ]
+    },
+    "eq": {
+      "block_name": "EQ",
+      "block_description": "3-band parametric equalizer with frequency control",
+      "parameters": [
+        {
+          "name": "EqPost",
+          "type": "tinyint(10)",
+          "description": "EQ placement in signal chain",
+          "range": "0=pre-amp, 1=post-amp",
+          "notes": "Affects tonal character significantly"
+        },
+        {
+          "name": "EqBass",
+          "type": "float(24)",
+          "description": "Bass boost/cut amount",
+          "range": "-10.0 to +10.0 dB",
+          "notes": "Low frequency control"
+        },
+        {
+          "name": "EqBassFreq",
+          "type": "float(24)",
+          "description": "Bass center frequency",
+          "range": "20.0-2000.0 Hz",
+          "notes": "Typical: 80-400 Hz"
+        },
+        {
+          "name": "EqMid",
+          "type": "float(24)",
+          "description": "Midrange boost/cut amount",
+          "range": "-10.0 to +10.0 dB",
+          "notes": "Most critical for tone shaping"
+        },
+        {
+          "name": "EqMidQ",
+          "type": "float(24)",
+          "description": "Midrange bandwidth/Q factor",
+          "range": "0.1-10.0",
+          "notes": "Lower Q = wider, Higher Q = narrower"
+        },
+        {
+          "name": "EqMidFreq",
+          "type": "float(24)",
+          "description": "Midrange center frequency",
+          "range": "200.0-5000.0 Hz",
+          "notes": "Typical: 500-2000 Hz"
+        },
+        {
+          "name": "EqTreble",
+          "type": "float(24)",
+          "description": "Treble boost/cut amount",
+          "range": "-10.0 to +10.0 dB",
+          "notes": "High frequency control"
+        },
+        {
+          "name": "EqTrebleFreq",
+          "type": "float(24)",
+          "description": "Treble center frequency",
+          "range": "1000.0-20000.0 Hz",
+          "notes": "Typical: 2000-8000 Hz"
+        }
+      ]
+    },
+    "compression": {
+      "block_name": "Compression",
+      "block_description": "Dynamic range compression for sustain and level control",
+      "parameters": [
+        {
+          "name": "CompPost",
+          "type": "tinyint(10)",
+          "description": "Compressor placement in signal chain",
+          "range": "0=pre-amp, 1=post-amp",
+          "notes": ""
+        },
+        {
+          "name": "CompEnable",
+          "type": "tinyint(10)",
+          "description": "Enable/bypass compressor",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "CompThreshold",
+          "type": "float(24)",
+          "description": "Compression threshold level",
+          "range": "-60.0 to 0.0 dB",
+          "notes": "Signals above this level are compressed"
+        },
+        {
+          "name": "CompMakeUp",
+          "type": "float(24)",
+          "description": "Make-up gain after compression",
+          "range": "-20.0 to +20.0 dB",
+          "notes": "Compensates for volume reduction"
+        },
+        {
+          "name": "CompAttack",
+          "type": "float(24)",
+          "description": "Attack time (how quickly compression engages)",
+          "range": "0.1-100.0 ms",
+          "notes": "Faster = more pick attack reduction"
+        }
+      ]
+    },
+    "noise_gate": {
+      "block_name": "Noise Gate",
+      "block_description": "Noise reduction and signal gating",
+      "parameters": [
+        {
+          "name": "NoiseGatePost",
+          "type": "tinyint(10)",
+          "description": "Noise gate placement in signal chain",
+          "range": "0=pre-amp, 1=post-amp",
+          "notes": "Post is typical for high-gain"
+        },
+        {
+          "name": "NoiseGateEnable",
+          "type": "tinyint(10)",
+          "description": "Enable/bypass noise gate",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "NoiseGateThreshold",
+          "type": "float(24)",
+          "description": "Gate threshold level",
+          "range": "-100.0 to 0.0 dB",
+          "notes": "Signals below this are attenuated"
+        },
+        {
+          "name": "NoiseGateRelease",
+          "type": "float(24)",
+          "description": "Release time (how quickly gate closes)",
+          "range": "0.0-1000.0 ms",
+          "notes": "Longer = more natural decay"
+        },
+        {
+          "name": "NoiseGateDepth",
+          "type": "float(24)",
+          "description": "Attenuation amount when gate is closed",
+          "range": "-100.0 to 0.0 dB",
+          "notes": "How much noise is reduced"
+        }
+      ]
+    },
+    "modulation": {
+      "block_name": "Modulation",
+      "block_description": "Chorus, tremolo, phaser, flanger, and rotary effects",
+      "parameters": [
+        {
+          "name": "ModPost",
+          "type": "tinyint(10)",
+          "description": "Modulation placement in signal chain",
+          "range": "0=pre-amp, 1=post-amp",
+          "notes": ""
+        },
+        {
+          "name": "ModEnable",
+          "type": "tinyint(10)",
+          "description": "Enable/bypass modulation effect",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModModel",
+          "type": "tinyint(10)",
+          "description": "Modulation effect type selector",
+          "range": "0=chorus, 1=tremolo, 2=phaser, 3=flanger, 4=rotary",
+          "notes": ""
+        },
+        {
+          "name": "ModChorusSync",
+          "type": "tinyint(10)",
+          "description": "Sync chorus rate to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModChorusTS",
+          "type": "tinyint(10)",
+          "description": "Chorus time signature division",
+          "range": "0-15",
+          "notes": "For tempo sync (quarter, eighth, etc.)"
+        },
+        {
+          "name": "ModChorusRate",
+          "type": "float(24)",
+          "description": "Chorus modulation speed",
+          "range": "0.0-20.0 Hz",
+          "notes": "LFO rate"
+        },
+        {
+          "name": "ModChorusDepth",
+          "type": "float(24)",
+          "description": "Chorus modulation depth",
+          "range": "0.0-100.0%",
+          "notes": "Amount of pitch variation"
+        },
+        {
+          "name": "ModChorusLevel",
+          "type": "float(24)",
+          "description": "Chorus effect mix level",
+          "range": "0.0-100.0%",
+          "notes": "Wet signal amount"
+        },
+        {
+          "name": "ModTremoloSync",
+          "type": "tinyint(10)",
+          "description": "Sync tremolo rate to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModTremoloTS",
+          "type": "tinyint(10)",
+          "description": "Tremolo time signature division",
+          "range": "0-15",
+          "notes": ""
+        },
+        {
+          "name": "ModTremoloRate",
+          "type": "float(24)",
+          "description": "Tremolo modulation speed",
+          "range": "0.0-20.0 Hz",
+          "notes": "Volume oscillation rate"
+        },
+        {
+          "name": "ModTremoloShape",
+          "type": "float(24)",
+          "description": "Tremolo waveform shape",
+          "range": "0.0-100.0%",
+          "notes": "Sine to square wave"
+        },
+        {
+          "name": "ModTremoloSpread",
+          "type": "float(24)",
+          "description": "Tremolo stereo spread",
+          "range": "0.0-100.0%",
+          "notes": "Stereo width"
+        },
+        {
+          "name": "ModTremoloLevel",
+          "type": "float(24)",
+          "description": "Tremolo effect intensity",
+          "range": "0.0-100.0%",
+          "notes": "Modulation depth"
+        },
+        {
+          "name": "ModPhaserSync",
+          "type": "tinyint(10)",
+          "description": "Sync phaser rate to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModPhaserTS",
+          "type": "tinyint(10)",
+          "description": "Phaser time signature division",
+          "range": "0-15",
+          "notes": ""
+        },
+        {
+          "name": "ModPhaserRate",
+          "type": "float(24)",
+          "description": "Phaser sweep speed",
+          "range": "0.0-20.0 Hz",
+          "notes": "LFO rate"
+        },
+        {
+          "name": "ModPhaserDepth",
+          "type": "float(24)",
+          "description": "Phaser sweep range",
+          "range": "0.0-100.0%",
+          "notes": "Frequency sweep amount"
+        },
+        {
+          "name": "ModPhaserLevel",
+          "type": "float(24)",
+          "description": "Phaser effect mix level",
+          "range": "0.0-100.0%",
+          "notes": ""
+        },
+        {
+          "name": "ModFlangerSync",
+          "type": "tinyint(10)",
+          "description": "Sync flanger rate to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModFlangerTS",
+          "type": "tinyint(10)",
+          "description": "Flanger time signature division",
+          "range": "0-15",
+          "notes": ""
+        },
+        {
+          "name": "ModFlangerRate",
+          "type": "float(24)",
+          "description": "Flanger sweep speed",
+          "range": "0.0-20.0 Hz",
+          "notes": ""
+        },
+        {
+          "name": "ModFlangerDepth",
+          "type": "float(24)",
+          "description": "Flanger delay modulation depth",
+          "range": "0.0-100.0%",
+          "notes": ""
+        },
+        {
+          "name": "ModFlangerFeedback",
+          "type": "float(24)",
+          "description": "Flanger resonance/feedback",
+          "range": "0.0-100.0%",
+          "notes": "Increases jet-plane effect"
+        },
+        {
+          "name": "ModFlangerLevel",
+          "type": "float(24)",
+          "description": "Flanger effect mix level",
+          "range": "0.0-100.0%",
+          "notes": ""
+        },
+        {
+          "name": "ModRotarySync",
+          "type": "tinyint(10)",
+          "description": "Sync rotary speed to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ModRotaryTS",
+          "type": "tinyint(10)",
+          "description": "Rotary time signature division",
+          "range": "0-15",
+          "notes": ""
+        },
+        {
+          "name": "ModRotarySpeed",
+          "type": "float(24)",
+          "description": "Rotary speaker speed",
+          "range": "0.0-1000.0 RPM",
+          "notes": "Simulates fast/slow switch"
+        },
+        {
+          "name": "ModRotaryRadius",
+          "type": "float(24)",
+          "description": "Rotary speaker horn radius",
+          "range": "0.0-200.0",
+          "notes": "Affects doppler shift"
+        },
+        {
+          "name": "ModRotarySpread",
+          "type": "float(24)",
+          "description": "Rotary stereo spread",
+          "range": "0.0-100.0%",
+          "notes": ""
+        },
+        {
+          "name": "ModRotaryLevel",
+          "type": "float(24)",
+          "description": "Rotary effect mix level",
+          "range": "0.0-100.0%",
+          "notes": ""
+        }
+      ]
+    },
+    "delay": {
+      "block_name": "Delay",
+      "block_description": "Digital and tape echo effects",
+      "parameters": [
+        {
+          "name": "DelayPost",
+          "type": "tinyint(10)",
+          "description": "Delay placement in signal chain",
+          "range": "0=pre-amp, 1=post-amp",
+          "notes": "Post is standard"
+        },
+        {
+          "name": "DelayEnable",
+          "type": "tinyint(10)",
+          "description": "Enable/bypass delay",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "DelayModel",
+          "type": "tinyint(10)",
+          "description": "Delay type selector",
+          "range": "0=digital, 1=tape",
+          "notes": "Tape adds warmth and saturation"
+        },
+        {
+          "name": "DelayDigitalSync",
+          "type": "tinyint(10)",
+          "description": "Sync digital delay to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "DelayDigitalTS",
+          "type": "tinyint(10)",
+          "description": "Digital delay time signature division",
+          "range": "0-15",
+          "notes": "Quarter, eighth, dotted, etc."
+        },
+        {
+          "name": "DelayDigitalTime",
+          "type": "float(24)",
+          "description": "Digital delay time",
+          "range": "0.0-2000.0 ms",
+          "notes": "Echo spacing"
+        },
+        {
+          "name": "DelayDigitalFeedback",
+          "type": "float(24)",
+          "description": "Digital delay feedback/repeats",
+          "range": "0.0-100.0%",
+          "notes": "Number of echoes"
+        },
+        {
+          "name": "DelayDigitalMode",
+          "type": "tinyint(10)",
+          "description": "Digital delay mode",
+          "range": "0-9",
+          "notes": "Mono, stereo, ping-pong variations"
+        },
+        {
+          "name": "DelayDigitalMix",
+          "type": "float(24)",
+          "description": "Digital delay wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": "Effect level"
+        },
+        {
+          "name": "DelayTapeSync",
+          "type": "tinyint(10)",
+          "description": "Sync tape delay to BPM",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "DelayTapeTS",
+          "type": "tinyint(10)",
+          "description": "Tape delay time signature division",
+          "range": "0-15",
+          "notes": ""
+        },
+        {
+          "name": "DelayTapeTime",
+          "type": "float(24)",
+          "description": "Tape delay time",
+          "range": "0.0-2000.0 ms",
+          "notes": ""
+        },
+        {
+          "name": "DelayTapeFeedback",
+          "type": "float(24)",
+          "description": "Tape delay feedback/repeats",
+          "range": "0.0-100.0%",
+          "notes": "With tape saturation"
+        },
+        {
+          "name": "DelayTapeMode",
+          "type": "tinyint(10)",
+          "description": "Tape delay mode",
+          "range": "0-9",
+          "notes": "Various tape head configurations"
+        },
+        {
+          "name": "DelayTapeMix",
+          "type": "float(24)",
+          "description": "Tape delay wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": ""
+        }
+      ]
+    },
+    "reverb": {
+      "block_name": "Reverb",
+      "block_description": "Spring, room, and plate reverb effects",
+      "parameters": [
+        {
+          "name": "ReverbPosition",
+          "type": "tinyint(10)",
+          "description": "Reverb placement in signal chain",
+          "range": "0=pre-amp, 1=post-amp",
+          "notes": "Post is standard"
+        },
+        {
+          "name": "ReverbEnable",
+          "type": "tinyint(10)",
+          "description": "Enable/bypass reverb",
+          "range": "0=off, 1=on",
+          "notes": ""
+        },
+        {
+          "name": "ReverbModel",
+          "type": "int",
+          "description": "Reverb type selector",
+          "range": "4=spring, 5=room, 6=plate",
+          "notes": "Different reverb algorithms"
+        },
+        {
+          "name": "ReverbSpring1Time",
+          "type": "float(24)",
+          "description": "Spring 1 reverb decay time",
+          "range": "0.0-10.0 seconds",
+          "notes": "How long reverb tail lasts"
+        },
+        {
+          "name": "ReverbSpring1PreDelay",
+          "type": "float(24)",
+          "description": "Spring 1 pre-delay time",
+          "range": "0.0-200.0 ms",
+          "notes": "Gap before reverb starts"
+        },
+        {
+          "name": "ReverbSpring1Color",
+          "type": "float(24)",
+          "description": "Spring 1 tone color (damping)",
+          "range": "-10.0 to +10.0",
+          "notes": "Darker to brighter"
+        },
+        {
+          "name": "ReverbSpring1Mix",
+          "type": "float(24)",
+          "description": "Spring 1 wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": "Effect level"
+        },
+        {
+          "name": "ReverbSpring2Time",
+          "type": "float(24)",
+          "description": "Spring 2 reverb decay time",
+          "range": "0.0-10.0 seconds",
+          "notes": "How long reverb tail lasts"
+        },
+        {
+          "name": "ReverbSpring2PreDelay",
+          "type": "float(24)",
+          "description": "Spring 2 pre-delay time",
+          "range": "0.0-200.0 ms",
+          "notes": "Gap before reverb starts"
+        },
+        {
+          "name": "ReverbSpring2Color",
+          "type": "float(24)",
+          "description": "Spring 2 tone color (damping)",
+          "range": "-10.0 to +10.0",
+          "notes": "Darker to brighter"
+        },
+        {
+          "name": "ReverbSpring2Mix",
+          "type": "float(24)",
+          "description": "Spring 2 wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": "Effect level"
+        },
+        {
+          "name": "ReverbSpring3Time",
+          "type": "float(24)",
+          "description": "Spring 3 reverb decay time",
+          "range": "0.0-10.0 seconds",
+          "notes": "How long reverb tail lasts"
+        },
+        {
+          "name": "ReverbSpring3PreDelay",
+          "type": "float(24)",
+          "description": "Spring 3 pre-delay time",
+          "range": "0.0-200.0 ms",
+          "notes": "Gap before reverb starts"
+        },
+        {
+          "name": "ReverbSpring3Color",
+          "type": "float(24)",
+          "description": "Spring 3 tone color (damping)",
+          "range": "-10.0 to +10.0",
+          "notes": "Darker to brighter"
+        },
+        {
+          "name": "ReverbSpring3Mix",
+          "type": "float(24)",
+          "description": "Spring 3 wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": "Effect level"
+        },
+        {
+          "name": "ReverbSpring4Time",
+          "type": "float(24)",
+          "description": "Spring 4 reverb decay time",
+          "range": "0.0-10.0 seconds",
+          "notes": "How long reverb tail lasts"
+        },
+        {
+          "name": "ReverbSpring4PreDelay",
+          "type": "float(24)",
+          "description": "Spring 4 pre-delay time",
+          "range": "0.0-200.0 ms",
+          "notes": "Gap before reverb starts"
+        },
+        {
+          "name": "ReverbSpring4Color",
+          "type": "float(24)",
+          "description": "Spring 4 tone color (damping)",
+          "range": "-10.0 to +10.0",
+          "notes": "Darker to brighter"
+        },
+        {
+          "name": "ReverbSpring4Mix",
+          "type": "float(24)",
+          "description": "Spring 4 wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": "Effect level"
+        },
+        {
+          "name": "ReverbRoomTime",
+          "type": "float(24)",
+          "description": "Room reverb decay time",
+          "range": "0.0-10.0 seconds",
+          "notes": "Room size simulation"
+        },
+        {
+          "name": "ReverbRoomPreDelay",
+          "type": "float(24)",
+          "description": "Room reverb pre-delay time",
+          "range": "0.0-200.0 ms",
+          "notes": ""
+        },
+        {
+          "name": "ReverbRoomColor",
+          "type": "float(24)",
+          "description": "Room reverb tone color",
+          "range": "-10.0 to +10.0",
+          "notes": ""
+        },
+        {
+          "name": "ReverbRoomMix",
+          "type": "float(24)",
+          "description": "Room reverb wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": ""
+        },
+        {
+          "name": "ReverbPlateTime",
+          "type": "float(24)",
+          "description": "Plate reverb decay time",
+          "range": "0.0-10.0 seconds",
+          "notes": "Smooth, dense reverb"
+        },
+        {
+          "name": "ReverbPlatePreDelay",
+          "type": "float(24)",
+          "description": "Plate reverb pre-delay time",
+          "range": "0.0-200.0 ms",
+          "notes": ""
+        },
+        {
+          "name": "ReverbPlateColor",
+          "type": "float(24)",
+          "description": "Plate reverb tone color",
+          "range": "-10.0 to +10.0",
+          "notes": ""
+        },
+        {
+          "name": "ReverbPlateMix",
+          "type": "float(24)",
+          "description": "Plate reverb wet/dry mix",
+          "range": "0.0-100.0%",
+          "notes": ""
+        }
+      ]
+    },
+    "cabinet": {
+      "block_name": "Cabinet",
+      "block_description": "Speaker cabinet simulation and microphone modeling",
+      "parameters": [
+        {
+          "name": "CabType",
+          "type": "int",
+          "description": "Cabinet simulation type",
+          "range": "0=VIR (Virtual), 2=Classic",
+          "notes": "VIR is more advanced modeling"
+        },
+        {
+          "name": "VIRCabModel",
+          "type": "int",
+          "description": "VIR cabinet model selection",
+          "range": "0-99",
+          "notes": "Different speaker cabinet types"
+        },
+        {
+          "name": "VIRCabMic1Model",
+          "type": "int",
+          "description": "Microphone 1 model type",
+          "range": "0-50",
+          "notes": "SM57, condenser, ribbon, etc."
+        },
+        {
+          "name": "VIRCabMic1X",
+          "type": "float(24)",
+          "description": "Microphone 1 horizontal position",
+          "range": "-2.0 to +2.0",
+          "notes": "Off-axis to on-axis placement"
+        },
+        {
+          "name": "VIRCabMic1Z",
+          "type": "float(24)",
+          "description": "Microphone 1 distance from speaker",
+          "range": "0.0-10.0",
+          "notes": "Close-mic to room-mic"
+        },
+        {
+          "name": "VIRCabMic2Model",
+          "type": "int",
+          "description": "Microphone 2 model type",
+          "range": "0-50",
+          "notes": "For dual-mic setups"
+        },
+        {
+          "name": "VIRCabMic2X",
+          "type": "float(24)",
+          "description": "Microphone 2 horizontal position",
+          "range": "-2.0 to +2.0",
+          "notes": ""
+        },
+        {
+          "name": "VIRCabMic2Z",
+          "type": "float(24)",
+          "description": "Microphone 2 distance from speaker",
+          "range": "0.0-10.0",
+          "notes": ""
+        },
+        {
+          "name": "VIRCabMicBlend",
+          "type": "float(24)",
+          "description": "Blend between microphone 1 and 2",
+          "range": "0.0-100.0%",
+          "notes": "0% = all mic 1, 100% = all mic 2"
+        },
+        {
+          "name": "VIRCabResonance",
+          "type": "float(24)",
+          "description": "Cabinet resonance/air movement",
+          "range": "0.0-10.0",
+          "notes": "Low-end cabinet thump"
+        }
+      ]
+    },
+    "other": {
+      "block_name": "Other",
+      "block_description": "Additional preset settings",
+      "parameters": [
+        {
+          "name": "HW_ExtControllerEnable",
+          "type": "tinyint(10)",
+          "description": "Enable external hardware controller integration",
+          "range": "0=off, 1=on",
+          "notes": "For MIDI/expression pedal control"
+        },
+        {
+          "name": "Favorite",
+          "type": "tinyint(10)",
+          "description": "Mark preset as favorite",
+          "range": "0=no, 1=yes",
+          "notes": "For quick access/filtering"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,399 @@
+
+
+CREATE TABLE SyncFlagsTable([InstanceGUID] mediumtext PRIMARY KEY DEFAULT '', [TimeStamp] integer, [ToneModelsTable] tinyiny(10) DEFAULT '0', [PresetsTable] tinyiny(10) DEFAULT '0', [CollectionsTree] tinyiny(10) DEFAULT '0', [ToneModelFolders] tinyiny(10) DEFAULT '0', [PresetFolders] tinyiny(10) DEFAULT '0', [BackupLibrary] tinyiny(10) DEFAULT '0')
+
+
+CREATE TABLE ToneModels([GUID] varchar(32) PRIMARY KEY NOT NULL, [Version] tinyint(10) DEFAULT '1', [Target] tinyint(10), [TargetOrder] mediumtext, [TierEncrypt] varchar(100), [Tier] tinyint(10), [IKGeneratedEncrypt] varchar(100), [IKGenerated] tinyint(10), [Skin] mediumtext, [Instrument] tinyint(10), [Copyright] mediumtext, [Model] mediumtext, [CabModel] mediumtext, [Tag_ModelName] varchar(32), [Tag_ModelerTags] varchar(32), [Tag_Date] date, [Tag_Keywords] varchar(32), [Tag_Description] varchar(32), [Tag_ModelCategory] varchar(32), [Tag_AmpName] varchar(32), [Tag_StompName] varchar(32), [Tag_AmpChannel] varchar(32), [Tag_ModelComment] varchar(32), [Tag_CabCategory] varchar(32), [Tag_CabName] varchar(32), [Tag_CabMic1] varchar(32), [Tag_CabMic2] varchar(32), [Tag_Outboard] varchar(32), [Tag_CabModelComment] varchar(32), [DateAdded] date, [DateTimeAdded] datetime, [Favorite] tinyint(10), [VisibleInCSEncrypt] varchar(100), [VisibleInCS] tinyint(10) , Factory tinyint(10) DEFAULT '0')
+
+
+CREATE TABLE Presets([GUID] varchar(32), [Version] tinyint(10) DEFAULT '1', [ToneModel_GUID] varchar(32), [OptionalToneModel_GUID] varchar(32), [Tag_PresetName] varchar(32) PRIMARY KEY NOT NULL, [Tag_UserName] varchar(32), [Tag_ModelerTags] varchar(32), [Tag_Date] date, [Tag_ModelCategory] varchar(32), [Tag_Instrument] varchar(32), [Tag_InstrumentType] varchar(32), [Tag_PickupPosition] varchar(32), [Tag_PickupType] varchar(32), [Tag_Artist] varchar(32), [Tag_Album] varchar(32), [Tag_Song] varchar(32), [Tag_SongPart] varchar(32), [Tag_Genre] varchar(32), [Tag_Description] varchar(64), [ModelEnable] tinyint(10), [ModelMix] float(24), [ModelGain] float(24), [ModelVolume] float(24), [PwrAmpEqPresence] float(24), [PwrAmpEqDepth] float(24), [EqPost] tinyint(10), [EqBass] float(24), [EqBassFreq] float(24), [EqMid] float(24), [EqMidQ] float(24), [EqMidFreq] float(24), [EqTreble] float(24), [EqTrebleFreq] float(24), [CompPost] tinyint(10), [CompEnable] tinyint(10), [CompThreshold] float(24), [CompMakeUp] float(24), [CompAttack] float(24), [NoiseGatePost] tinyint(10), [NoiseGateEnable] tinyint(10), [NoiseGateThreshold] float(24), [NoiseGateRelease] float(24), [NoiseGateDepth] float(24), [BPM] float(24), [ModPost] tinyint(10), [ModEnable] tinyint(10), [ModModel] tinyint(10), [ModChorusSync] tinyint(10), [ModChorusTS] tinyint(10), [ModChorusRate] float(24), [ModChorusDepth] float(24), [ModChorusLevel] float(24), [ModTremoloSync] tinyint(10), [ModTremoloTS] tinyint(10), [ModTremoloRate] float(24), [ModTremoloShape] float(24), [ModTremoloSpread] float(24), [ModTremoloLevel] float(24), [ModPhaserSync] tinyint(10), [ModPhaserTS] tinyint(10), [ModPhaserRate] float(24), [ModPhaserDepth] float(24), [ModPhaserLevel] float(24), [ModFlangerSync] tinyint(10), [ModFlangerTS] tinyint(10), [ModFlangerRate] float(24), [ModFlangerDepth] float(24), [ModFlangerFeedback] float(24), [ModFlangerLevel] float(24), [ModRotarySync] tinyint(10), [ModRotaryTS] tinyint(10), [ModRotarySpeed] float(24), [ModRotaryRadius] float(24), [ModRotarySpread] float(24), [ModRotaryLevel] float(24), [DelayPost] tinyint(10), [DelayEnable] tinyint(10), [DelayModel] tinyint(10), [DelayDigitalSync] tinyint(10), [DelayDigitalTS] tinyint(10), [DelayDigitalTime] float(24), [DelayDigitalFeedback] float(24), [DelayDigitalMode] tinyint(10), [DelayDigitalMix] float(24), [DelayTapeSync] tinyint(10), [DelayTapeTS] tinyint(10), [DelayTapeTime] float(24), [DelayTapeFeedback] float(24), [DelayTapeMode] tinyint(10), [DelayTapeMix] float(24), [ReverbPosition] tinyint(10), [ReverbEnable] tinyint(10), [ReverbModel] int, [ReverbSpring1Time] float(24), [ReverbSpring1PreDelay] float(24), [ReverbSpring1Color] float(24), [ReverbSpring1Mix] float(24), [ReverbSpring2Time] float(24), [ReverbSpring2PreDelay] float(24), [ReverbSpring2Color] float(24), [ReverbSpring2Mix] float(24), [ReverbSpring3Time] float(24), [ReverbSpring3PreDelay] float(24), [ReverbSpring3Color] float(24), [ReverbSpring3Mix] float(24), [ReverbSpring4Time] float(24), [ReverbSpring4PreDelay] float(24), [ReverbSpring4Color] float(24), [ReverbSpring4Mix] float(24), [ReverbRoomTime] float(24), [ReverbRoomPreDelay] float(24), [ReverbRoomColor] float(24), [ReverbRoomMix] float(24), [ReverbPlateTime] float(24), [ReverbPlatePreDelay] float(24), [ReverbPlateColor] float(24), [ReverbPlateMix] float(24), [CabType] int, [VIRCabModel] int, [VIRCabMic1Model] int, [VIRCabMic1X] float(24), [VIRCabMic1Z] float(24), [VIRCabMic2Model] int, [VIRCabMic2X] float(24), [VIRCabMic2Z] float(24), [VIRCabMicBlend] float(24), [VIRCabResonance] float(24), [HWParamA_ModelEnable] tinyint(10), [HWParamA_ModelMix] float(24), [HWParamA_ModelGain] float(24), [HWParamA_ModelVolume] float(24), [HWParamA_PwrAmpEqPresence] float(24), [HWParamA_PwrAmpEqDepth] float(24), [HWParamA_EqPost] tinyint(10), [HWParamA_EqBass] float(24), [HWParamA_EqBassFreq] float(24), [HWParamA_EqMid] float(24), [HWParamA_EqMidQ] float(24), [HWParamA_EqMidFreq] float(24), [HWParamA_EqTreble] float(24), [HWParamA_EqTrebleFreq] float(24), [HWParamA_CompPost] tinyint(10), [HWParamA_CompEnable] tinyint(10), [HWParamA_CompThreshold] float(24), [HWParamA_CompMakeUp] float(24), [HWParamA_CompAttack] float(24), [HWParamA_ModPost] tinyint(10), [HWParamA_ModEnable] tinyint(10), [HWParamA_ModModel] tinyint(10), [HWParamA_ModChorusSync] tinyint(10), [HWParamA_ModChorusTS] tinyint(10), [HWParamA_ModChorusRate] float(24), [HWParamA_ModChorusDepth] float(24), [HWParamA_ModChorusLevel] float(24), [HWParamA_ModTremoloSync] tinyint(10), [HWParamA_ModTremoloTS] tinyint(10), [HWParamA_ModTremoloRate] float(24), [HWParamA_ModTremoloShape] float(24), [HWParamA_ModTremoloSpread] float(24), [HWParamA_ModTremoloLevel] float(24), [HWParamA_ModPhaserSync] tinyint(10), [HWParamA_ModPhaserTS] tinyint(10), [HWParamA_ModPhaserRate] float(24), [HWParamA_ModPhaserDepth] float(24), [HWParamA_ModPhaserLevel] float(24), [HWParamA_ModFlangerSync] tinyint(10), [HWParamA_ModFlangerTS] tinyint(10), [HWParamA_ModFlangerRate] float(24), [HWParamA_ModFlangerDepth] float(24), [HWParamA_ModFlangerFeedback] float(24), [HWParamA_ModFlangerLevel] float(24), [HWParamA_ModRotarySync] tinyint(10), [HWParamA_ModRotaryTS] tinyint(10), [HWParamA_ModRotarySpeed] float(24), [HWParamA_ModRotaryRadius] float(24), [HWParamA_ModRotarySpread] float(24), [HWParamA_ModRotaryLevel] float(24), [HWParamA_DelayPost] tinyint(10), [HWParamA_DelayEnable] tinyint(10), [HWParamA_DelayModel] tinyint(10), [HWParamA_DelayDigitalSync] tinyint(10), [HWParamA_DelayDigitalTS] tinyint(10), [HWParamA_DelayDigitalTime] float(24), [HWParamA_DelayDigitalFeedback] float(24), [HWParamA_DelayDigitalMode] tinyint(10), [HWParamA_DelayDigitalMix] float(24), [HWParamA_DelayTapeSync] tinyint(10), [HWParamA_DelayTapeTS] tinyint(10), [HWParamA_DelayTapeTime] float(24), [HWParamA_DelayTapeFeedback] float(24), [HWParamA_DelayTapeMode] tinyint(10), [HWParamA_DelayTapeMix] float(24), [HWParamA_NoiseGatePost] tinyint(10), [HWParamA_NoiseGateEnable] tinyint(10), [HWParamA_NoiseGateThreshold] float(24), [HWParamA_NoiseGateRelease] float(24), [HWParamA_NoiseGateDepth] float(24), [HWParamA_ReverbPosition] tinyint(10), [HWParamA_ReverbEnable] tinyint(10), [HWParamA_ReverbModel] int, [HWParamA_ReverbSpring1Time] float(24), [HWParamA_ReverbSpring1PreDelay] float(24), [HWParamA_ReverbSpring1Color] float(24), [HWParamA_ReverbSpring1Mix] float(24), [HWParamA_ReverbSpring2Time] float(24), [HWParamA_ReverbSpring2PreDelay] float(24), [HWParamA_ReverbSpring2Color] float(24), [HWParamA_ReverbSpring2Mix] float(24), [HWParamA_ReverbSpring3Time] float(24), [HWParamA_ReverbSpring3PreDelay] float(24), [HWParamA_ReverbSpring3Color] float(24), [HWParamA_ReverbSpring3Mix] float(24), [HWParamA_ReverbSpring4Time] float(24), [HWParamA_ReverbSpring4PreDelay] float(24), [HWParamA_ReverbSpring4Color] float(24), [HWParamA_ReverbSpring4Mix] float(24), [HWParamA_ReverbRoomTime] float(24), [HWParamA_ReverbRoomPreDelay] float(24), [HWParamA_ReverbRoomColor] float(24), [HWParamA_ReverbRoomMix] float(24), [HWParamA_ReverbPlateTime] float(24), [HWParamA_ReverbPlatePreDelay] float(24), [HWParamA_ReverbPlateColor] float(24), [HWParamA_ReverbPlateMix] float(24), [HWParamA_CabType] int, [HWParamA_VIRCabModel] int, [HWParamA_VIRCabMic1Model] int, [HWParamA_VIRCabMic1X] float(24), [HWParamA_VIRCabMic1Z] float(24), [HWParamA_VIRCabMic2Model] int, [HWParamA_VIRCabMic2X] float(24), [HWParamA_VIRCabMic2Z] float(24), [HWParamA_VIRCabMicBlend] float(24), [HWParamA_VIRCabResonance] float(24), [HWParamB_ModelEnable] tinyint(10), [HWParamB_ModelMix] float(24), [HWParamB_ModelGain] float(24), [HWParamB_ModelVolume] float(24), [HWParamB_PwrAmpEqPresence] float(24), [HWParamB_PwrAmpEqDepth] float(24), [HWParamB_EqPost] tinyint(10), [HWParamB_EqBass] float(24), [HWParamB_EqBassFreq] float(24), [HWParamB_EqMid] float(24), [HWParamB_EqMidQ] float(24), [HWParamB_EqMidFreq] float(24), [HWParamB_EqTreble] float(24), [HWParamB_EqTrebleFreq] float(24), [HWParamB_CompPost] tinyint(10), [HWParamB_CompEnable] tinyint(10), [HWParamB_CompThreshold] float(24), [HWParamB_CompMakeUp] float(24), [HWParamB_CompAttack] float(24), [HWParamB_ModPost] tinyint(10), [HWParamB_ModEnable] tinyint(10), [HWParamB_ModModel] tinyint(10), [HWParamB_ModChorusSync] tinyint(10), [HWParamB_ModChorusTS] tinyint(10), [HWParamB_ModChorusRate] float(24), [HWParamB_ModChorusDepth] float(24), [HWParamB_ModChorusLevel] float(24), [HWParamB_ModTremoloSync] tinyint(10), [HWParamB_ModTremoloTS] tinyint(10), [HWParamB_ModTremoloRate] float(24), [HWParamB_ModTremoloShape] float(24), [HWParamB_ModTremoloSpread] float(24), [HWParamB_ModTremoloLevel] float(24), [HWParamB_ModPhaserSync] tinyint(10), [HWParamB_ModPhaserTS] tinyint(10), [HWParamB_ModPhaserRate] float(24), [HWParamB_ModPhaserDepth] float(24), [HWParamB_ModPhaserLevel] float(24), [HWParamB_ModFlangerSync] tinyint(10), [HWParamB_ModFlangerTS] tinyint(10), [HWParamB_ModFlangerRate] float(24), [HWParamB_ModFlangerDepth] float(24), [HWParamB_ModFlangerFeedback] float(24), [HWParamB_ModFlangerLevel] float(24), [HWParamB_ModRotarySync] tinyint(10), [HWParamB_ModRotaryTS] tinyint(10), [HWParamB_ModRotarySpeed] float(24), [HWParamB_ModRotaryRadius] float(24), [HWParamB_ModRotarySpread] float(24), [HWParamB_ModRotaryLevel] float(24), [HWParamB_DelayPost] tinyint(10), [HWParamB_DelayEnable] tinyint(10), [HWParamB_DelayModel] tinyint(10), [HWParamB_DelayDigitalSync] tinyint(10), [HWParamB_DelayDigitalTS] tinyint(10), [HWParamB_DelayDigitalTime] float(24), [HWParamB_DelayDigitalFeedback] float(24), [HWParamB_DelayDigitalMode] tinyint(10), [HWParamB_DelayDigitalMix] float(24), [HWParamB_DelayTapeSync] tinyint(10), [HWParamB_DelayTapeTS] tinyint(10), [HWParamB_DelayTapeTime] float(24), [HWParamB_DelayTapeFeedback] float(24), [HWParamB_DelayTapeMode] tinyint(10), [HWParamB_DelayTapeMix] float(24), [HWParamB_NoiseGatePost] tinyint(10), [HWParamB_NoiseGateEnable] tinyint(10), [HWParamB_NoiseGateThreshold] float(24), [HWParamB_NoiseGateRelease] float(24), [HWParamB_NoiseGateDepth] float(24), [HWParamB_ReverbPosition] tinyint(10), [HWParamB_ReverbEnable] tinyint(10), [HWParamB_ReverbModel] int, [HWParamB_ReverbSpring1Time] float(24), [HWParamB_ReverbSpring1PreDelay] float(24), [HWParamB_ReverbSpring1Color] float(24), [HWParamB_ReverbSpring1Mix] float(24), [HWParamB_ReverbSpring2Time] float(24), [HWParamB_ReverbSpring2PreDelay] float(24), [HWParamB_ReverbSpring2Color] float(24), [HWParamB_ReverbSpring2Mix] float(24), [HWParamB_ReverbSpring3Time] float(24), [HWParamB_ReverbSpring3PreDelay] float(24), [HWParamB_ReverbSpring3Color] float(24), [HWParamB_ReverbSpring3Mix] float(24), [HWParamB_ReverbSpring4Time] float(24), [HWParamB_ReverbSpring4PreDelay] float(24), [HWParamB_ReverbSpring4Color] float(24), [HWParamB_ReverbSpring4Mix] float(24), [HWParamB_ReverbRoomTime] float(24), [HWParamB_ReverbRoomPreDelay] float(24), [HWParamB_ReverbRoomColor] float(24), [HWParamB_ReverbRoomMix] float(24), [HWParamB_ReverbPlateTime] float(24), [HWParamB_ReverbPlatePreDelay] float(24), [HWParamB_ReverbPlateColor] float(24), [HWParamB_ReverbPlateMix] float(24), [HWParamB_CabType] int, [HWParamB_VIRCabModel] int, [HWParamB_VIRCabMic1Model] int, [HWParamB_VIRCabMic1X] float(24), [HWParamB_VIRCabMic1Z] float(24), [HWParamB_VIRCabMic2Model] int, [HWParamB_VIRCabMic2X] float(24), [HWParamB_VIRCabMic2Z] float(24), [HWParamB_VIRCabMicBlend] float(24), [HWParamB_VIRCabResonance] float(24), [HW_ExtControllerEnable] tinyint(10), [Favorite] tinyint(10) )
+
+
+CREATE TABLE CollectionData([Code] mediumtext PRIMARY KEY NOT NULL, [Type] mediumtext, [Name] mediumtext, [OwnedEncrypt] varchar(100), [Owned] bool,[Privacy] mediumtext,[CreatorName] mediumtext, [Subtitle] mediumtext, [Description] mediumtext, [LongDescription] mediumtext, [Date] date, [LastUpdateDate] datetime, [Price] mediumtext, [URL] mediumtext, [SalesRule] mediumtext, [ImagePath] mediumtext )
+
+
+CREATE TABLE ToneModelFolders([Name] mediumtext PRIMARY KEY NOT NULL )
+
+
+CREATE TABLE ToneModelFolderAssociations([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [ToneModelGUID] mediumtext, [FolderName] mediumtext )
+
+
+CREATE TABLE sqlite_sequence(name,seq)
+
+
+CREATE TABLE PresetFolders([Name] mediumtext PRIMARY KEY NOT NULL )
+
+
+CREATE TABLE PresetFolderAssociations([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [PresetName] mediumtext, [FolderName] mediumtext )
+
+
+CREATE TABLE CollectionToneModels([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [CollectionCode] mediumtext, [GUID] mediumtext )
+
+
+CREATE TABLE CollectionCreators([CreatorName] mediumtext PRIMARY KEY NOT NULL, [ImagePath] mediumtext )
+
+
+CREATE TABLE UserIDFileInfo([Date] date PRIMARY KEY NOT NULL, [GUIDUserIDFilename] mediumtext, [UserIDNicknameFilename] mediumtext, [UserIDToneNETAvatarFilename] mediumtext )
+
+
+CREATE TABLE UserIDFileInfo2([Key] mediumtext PRIMARY KEY NOT NULL, [Value] mediumtext )
+
+
+CREATE TABLE ToneModelsUserIDMatch([GUID] mediumtext PRIMARY KEY NOT NULL, [UserID] mediumtext )
+
+
+CREATE TABLE UserIDNicknameMatch([UserID] mediumtext PRIMARY KEY NOT NULL, [Nickname] mediumtext )
+
+
+CREATE TABLE UserIDToneNETAvatarMatch([UserID] mediumtext PRIMARY KEY NOT NULL, [ToneNETAvatar] mediumtext )
+
+
+CREATE TABLE ToneNETSearchTerms([GUID] mediumtext PRIMARY KEY NOT NULL, [Tags] mediumtext )
+
+
+
+Presets:
+  GUID (varchar(32)): 00000000-0000-0000-0000-000000000000
+  Version (tinyint(10)): 3
+  ToneModel_GUID (varchar(32)): 9393d599-26eb-bb17-7cdf-a2102ac3276b
+  OptionalToneModel_GUID (varchar(32)): 
+  Tag_PresetName (varchar(32)): UK800
+  Tag_UserName (varchar(32)): IK Multimedia
+  Tag_ModelerTags (varchar(32)): None
+  Tag_Date (date): 2025-11-28
+  Tag_ModelCategory (varchar(32)): HI-GAIN
+  Tag_Instrument (varchar(32)): None
+  Tag_InstrumentType (varchar(32)): None
+  Tag_PickupPosition (varchar(32)): None
+  Tag_PickupType (varchar(32)): None
+  Tag_Artist (varchar(32)): 
+  Tag_Album (varchar(32)): 
+  Tag_Song (varchar(32)): 
+  Tag_SongPart (varchar(32)): 
+  Tag_Genre (varchar(32)): 
+  Tag_Description (varchar(64)): 
+  ModelEnable (tinyint(10)): 1
+  ModelMix (float(24)): 100.0
+  ModelGain (float(24)): 3.3
+  ModelVolume (float(24)): 6.4
+  PwrAmpEqPresence (float(24)): 5.0
+  PwrAmpEqDepth (float(24)): 5.0
+  EqPost (tinyint(10)): 1
+  EqBass (float(24)): 5.0
+  EqBassFreq (float(24)): 300.0
+  EqMid (float(24)): 5.0
+  EqMidQ (float(24)): 0.7
+  EqMidFreq (float(24)): 750.0
+  EqTreble (float(24)): 5.0
+  EqTrebleFreq (float(24)): 1900.0
+  CompPost (tinyint(10)): 1
+  CompEnable (tinyint(10)): 0
+  CompThreshold (float(24)): 0.0
+  CompMakeUp (float(24)): 0.0
+  CompAttack (float(24)): 5.0
+  NoiseGatePost (tinyint(10)): 0
+  NoiseGateEnable (tinyint(10)): 0
+  NoiseGateThreshold (float(24)): -100.0
+  NoiseGateRelease (float(24)): 20.0
+  NoiseGateDepth (float(24)): -60.0
+  BPM (float(24)): 120.0
+  ModPost (tinyint(10)): 1
+  ModEnable (tinyint(10)): 0
+  ModModel (tinyint(10)): 0
+  ModChorusSync (tinyint(10)): 0
+  ModChorusTS (tinyint(10)): 15
+  ModChorusRate (float(24)): 0.5
+  ModChorusDepth (float(24)): 50.0
+  ModChorusLevel (float(24)): 7.5
+  ModTremoloSync (tinyint(10)): 0
+  ModTremoloTS (tinyint(10)): 3
+  ModTremoloRate (float(24)): 6.5
+  ModTremoloShape (float(24)): 0.0
+  ModTremoloSpread (float(24)): 0.0
+  ModTremoloLevel (float(24)): 6.0
+  ModPhaserSync (tinyint(10)): 0
+  ModPhaserTS (tinyint(10)): 15
+  ModPhaserRate (float(24)): 0.5
+  ModPhaserDepth (float(24)): 50.0
+  ModPhaserLevel (float(24)): 7.5
+  ModFlangerSync (tinyint(10)): 0
+  ModFlangerTS (tinyint(10)): 15
+  ModFlangerRate (float(24)): 0.5
+  ModFlangerDepth (float(24)): 50.0
+  ModFlangerFeedback (float(24)): 25.0
+  ModFlangerLevel (float(24)): 7.5
+  ModRotarySync (tinyint(10)): 0
+  ModRotaryTS (tinyint(10)): 3
+  ModRotarySpeed (float(24)): 360.0
+  ModRotaryRadius (float(24)): 120.0
+  ModRotarySpread (float(24)): 50.0
+  ModRotaryLevel (float(24)): 5.0
+  DelayPost (tinyint(10)): 1
+  DelayEnable (tinyint(10)): 0
+  DelayModel (tinyint(10)): 0
+  DelayDigitalSync (tinyint(10)): 0
+  DelayDigitalTS (tinyint(10)): 9
+  DelayDigitalTime (float(24)): 350.0
+  DelayDigitalFeedback (float(24)): 20.0
+  DelayDigitalMode (tinyint(10)): 0
+  DelayDigitalMix (float(24)): 50.0
+  DelayTapeSync (tinyint(10)): 0
+  DelayTapeTS (tinyint(10)): 9
+  DelayTapeTime (float(24)): 350.0
+  DelayTapeFeedback (float(24)): 20.0
+  DelayTapeMode (tinyint(10)): 0
+  DelayTapeMix (float(24)): 50.0
+  ReverbPosition (tinyint(10)): 1
+  ReverbEnable (tinyint(10)): 1
+  ReverbModel (INT): 4
+  ReverbSpring1Time (float(24)): 2.0
+  ReverbSpring1PreDelay (float(24)): 0.0
+  ReverbSpring1Color (float(24)): 0.0
+  ReverbSpring1Mix (float(24)): 18.0
+  ReverbSpring2Time (float(24)): 2.0
+  ReverbSpring2PreDelay (float(24)): 0.0
+  ReverbSpring2Color (float(24)): 0.0
+  ReverbSpring2Mix (float(24)): 18.0
+  ReverbSpring3Time (float(24)): 2.0
+  ReverbSpring3PreDelay (float(24)): 0.0
+  ReverbSpring3Color (float(24)): 0.0
+  ReverbSpring3Mix (float(24)): 18.0
+  ReverbSpring4Time (float(24)): 2.0
+  ReverbSpring4PreDelay (float(24)): 0.0
+  ReverbSpring4Color (float(24)): 0.0
+  ReverbSpring4Mix (float(24)): 18.0
+  ReverbRoomTime (float(24)): 2.0
+  ReverbRoomPreDelay (float(24)): 0.0
+  ReverbRoomColor (float(24)): 0.0
+  ReverbRoomMix (float(24)): 18.0
+  ReverbPlateTime (float(24)): 2.0
+  ReverbPlatePreDelay (float(24)): 0.0
+  ReverbPlateColor (float(24)): 0.0
+  ReverbPlateMix (float(24)): 18.0
+  CabType (INT): 0
+  VIRCabModel (INT): 25
+  VIRCabMic1Model (INT): 0
+  VIRCabMic1X (float(24)): 1.5
+  VIRCabMic1Z (float(24)): 0.0
+  VIRCabMic2Model (INT): 1
+  VIRCabMic2X (float(24)): 1.5
+  VIRCabMic2Z (float(24)): 0.0
+  VIRCabMicBlend (float(24)): 0.0
+  VIRCabResonance (float(24)): 5.0
+  HWParamA_ModelEnable (tinyint(10)): 1
+  HWParamA_ModelMix (float(24)): 100.0
+  HWParamA_ModelGain (float(24)): 5.0
+  HWParamA_ModelVolume (float(24)): 5.0
+  HWParamA_PwrAmpEqPresence (float(24)): 5.0
+  HWParamA_PwrAmpEqDepth (float(24)): 5.0
+  HWParamA_EqPost (tinyint(10)): 1
+  HWParamA_EqBass (float(24)): 5.0
+  HWParamA_EqBassFreq (float(24)): 300.0
+  HWParamA_EqMid (float(24)): 5.0
+  HWParamA_EqMidQ (float(24)): 0.7
+  HWParamA_EqMidFreq (float(24)): 750.0
+  HWParamA_EqTreble (float(24)): 5.0
+  HWParamA_EqTrebleFreq (float(24)): 1900.0
+  HWParamA_CompPost (tinyint(10)): 1
+  HWParamA_CompEnable (tinyint(10)): 0
+  HWParamA_CompThreshold (float(24)): 0.0
+  HWParamA_CompMakeUp (float(24)): 0.0
+  HWParamA_CompAttack (float(24)): 5.0
+  HWParamA_ModPost (tinyint(10)): 1
+  HWParamA_ModEnable (tinyint(10)): 0
+  HWParamA_ModModel (tinyint(10)): 0
+  HWParamA_ModChorusSync (tinyint(10)): 0
+  HWParamA_ModChorusTS (tinyint(10)): 15
+  HWParamA_ModChorusRate (float(24)): 0.5
+  HWParamA_ModChorusDepth (float(24)): 50.0
+  HWParamA_ModChorusLevel (float(24)): 7.5
+  HWParamA_ModTremoloSync (tinyint(10)): 0
+  HWParamA_ModTremoloTS (tinyint(10)): 3
+  HWParamA_ModTremoloRate (float(24)): 6.5
+  HWParamA_ModTremoloShape (float(24)): 0.0
+  HWParamA_ModTremoloSpread (float(24)): 0.0
+  HWParamA_ModTremoloLevel (float(24)): 6.0
+  HWParamA_ModPhaserSync (tinyint(10)): 0
+  HWParamA_ModPhaserTS (tinyint(10)): 15
+  HWParamA_ModPhaserRate (float(24)): 0.5
+  HWParamA_ModPhaserDepth (float(24)): 50.0
+  HWParamA_ModPhaserLevel (float(24)): 7.5
+  HWParamA_ModFlangerSync (tinyint(10)): 0
+  HWParamA_ModFlangerTS (tinyint(10)): 15
+  HWParamA_ModFlangerRate (float(24)): 0.5
+  HWParamA_ModFlangerDepth (float(24)): 50.0
+  HWParamA_ModFlangerFeedback (float(24)): 25.0
+  HWParamA_ModFlangerLevel (float(24)): 7.5
+  HWParamA_ModRotarySync (tinyint(10)): 0
+  HWParamA_ModRotaryTS (tinyint(10)): 3
+  HWParamA_ModRotarySpeed (float(24)): 360.0
+  HWParamA_ModRotaryRadius (float(24)): 120.0
+  HWParamA_ModRotarySpread (float(24)): 50.0
+  HWParamA_ModRotaryLevel (float(24)): 5.0
+  HWParamA_DelayPost (tinyint(10)): 1
+  HWParamA_DelayEnable (tinyint(10)): 0
+  HWParamA_DelayModel (tinyint(10)): 0
+  HWParamA_DelayDigitalSync (tinyint(10)): 0
+  HWParamA_DelayDigitalTS (tinyint(10)): 9
+  HWParamA_DelayDigitalTime (float(24)): 350.0
+  HWParamA_DelayDigitalFeedback (float(24)): 20.0
+  HWParamA_DelayDigitalMode (tinyint(10)): 0
+  HWParamA_DelayDigitalMix (float(24)): 50.0
+  HWParamA_DelayTapeSync (tinyint(10)): 0
+  HWParamA_DelayTapeTS (tinyint(10)): 9
+  HWParamA_DelayTapeTime (float(24)): 350.0
+  HWParamA_DelayTapeFeedback (float(24)): 20.0
+  HWParamA_DelayTapeMode (tinyint(10)): 0
+  HWParamA_DelayTapeMix (float(24)): 50.0
+  HWParamA_NoiseGatePost (tinyint(10)): 0
+  HWParamA_NoiseGateEnable (tinyint(10)): 0
+  HWParamA_NoiseGateThreshold (float(24)): -100.0
+  HWParamA_NoiseGateRelease (float(24)): 20.0
+  HWParamA_NoiseGateDepth (float(24)): -60.0
+  HWParamA_ReverbPosition (tinyint(10)): 1
+  HWParamA_ReverbEnable (tinyint(10)): 0
+  HWParamA_ReverbModel (INT): 4
+  HWParamA_ReverbSpring1Time (float(24)): 5.0
+  HWParamA_ReverbSpring1PreDelay (float(24)): 0.0
+  HWParamA_ReverbSpring1Color (float(24)): 0.0
+  HWParamA_ReverbSpring1Mix (float(24)): 0.0
+  HWParamA_ReverbSpring2Time (float(24)): 5.0
+  HWParamA_ReverbSpring2PreDelay (float(24)): 0.0
+  HWParamA_ReverbSpring2Color (float(24)): 0.0
+  HWParamA_ReverbSpring2Mix (float(24)): 0.0
+  HWParamA_ReverbSpring3Time (float(24)): 5.0
+  HWParamA_ReverbSpring3PreDelay (float(24)): 0.0
+  HWParamA_ReverbSpring3Color (float(24)): 0.0
+  HWParamA_ReverbSpring3Mix (float(24)): 0.0
+  HWParamA_ReverbSpring4Time (float(24)): 5.0
+  HWParamA_ReverbSpring4PreDelay (float(24)): 0.0
+  HWParamA_ReverbSpring4Color (float(24)): 0.0
+  HWParamA_ReverbSpring4Mix (float(24)): 0.0
+  HWParamA_ReverbRoomTime (float(24)): 5.0
+  HWParamA_ReverbRoomPreDelay (float(24)): 0.0
+  HWParamA_ReverbRoomColor (float(24)): 0.0
+  HWParamA_ReverbRoomMix (float(24)): 0.0
+  HWParamA_ReverbPlateTime (float(24)): 5.0
+  HWParamA_ReverbPlatePreDelay (float(24)): 0.0
+  HWParamA_ReverbPlateColor (float(24)): 0.0
+  HWParamA_ReverbPlateMix (float(24)): 0.0
+  HWParamA_CabType (INT): 0
+  HWParamA_VIRCabModel (INT): 25
+  HWParamA_VIRCabMic1Model (INT): 0
+  HWParamA_VIRCabMic1X (float(24)): 1.5
+  HWParamA_VIRCabMic1Z (float(24)): 0.0
+  HWParamA_VIRCabMic2Model (INT): 1
+  HWParamA_VIRCabMic2X (float(24)): 1.5
+  HWParamA_VIRCabMic2Z (float(24)): 0.0
+  HWParamA_VIRCabMicBlend (float(24)): 0.0
+  HWParamA_VIRCabResonance (float(24)): 5.0
+  HWParamB_ModelEnable (tinyint(10)): 1
+  HWParamB_ModelMix (float(24)): 100.0
+  HWParamB_ModelGain (float(24)): 5.0
+  HWParamB_ModelVolume (float(24)): 5.0
+  HWParamB_PwrAmpEqPresence (float(24)): 5.0
+  HWParamB_PwrAmpEqDepth (float(24)): 5.0
+  HWParamB_EqPost (tinyint(10)): 1
+  HWParamB_EqBass (float(24)): 5.0
+  HWParamB_EqBassFreq (float(24)): 300.0
+  HWParamB_EqMid (float(24)): 5.0
+  HWParamB_EqMidQ (float(24)): 0.7
+  HWParamB_EqMidFreq (float(24)): 750.0
+  HWParamB_EqTreble (float(24)): 5.0
+  HWParamB_EqTrebleFreq (float(24)): 1900.0
+  HWParamB_CompPost (tinyint(10)): 1
+  HWParamB_CompEnable (tinyint(10)): 0
+  HWParamB_CompThreshold (float(24)): 0.0
+  HWParamB_CompMakeUp (float(24)): 0.0
+  HWParamB_CompAttack (float(24)): 5.0
+  HWParamB_ModPost (tinyint(10)): 1
+  HWParamB_ModEnable (tinyint(10)): 0
+  HWParamB_ModModel (tinyint(10)): 0
+  HWParamB_ModChorusSync (tinyint(10)): 0
+  HWParamB_ModChorusTS (tinyint(10)): 15
+  HWParamB_ModChorusRate (float(24)): 0.5
+  HWParamB_ModChorusDepth (float(24)): 50.0
+  HWParamB_ModChorusLevel (float(24)): 7.5
+  HWParamB_ModTremoloSync (tinyint(10)): 0
+  HWParamB_ModTremoloTS (tinyint(10)): 3
+  HWParamB_ModTremoloRate (float(24)): 6.5
+  HWParamB_ModTremoloShape (float(24)): 0.0
+  HWParamB_ModTremoloSpread (float(24)): 0.0
+  HWParamB_ModTremoloLevel (float(24)): 6.0
+  HWParamB_ModPhaserSync (tinyint(10)): 0
+  HWParamB_ModPhaserTS (tinyint(10)): 15
+  HWParamB_ModPhaserRate (float(24)): 0.5
+  HWParamB_ModPhaserDepth (float(24)): 50.0
+  HWParamB_ModPhaserLevel (float(24)): 7.5
+  HWParamB_ModFlangerSync (tinyint(10)): 0
+  HWParamB_ModFlangerTS (tinyint(10)): 15
+  HWParamB_ModFlangerRate (float(24)): 0.5
+  HWParamB_ModFlangerDepth (float(24)): 50.0
+  HWParamB_ModFlangerFeedback (float(24)): 25.0
+  HWParamB_ModFlangerLevel (float(24)): 7.5
+  HWParamB_ModRotarySync (tinyint(10)): 0
+  HWParamB_ModRotaryTS (tinyint(10)): 3
+  HWParamB_ModRotarySpeed (float(24)): 360.0
+  HWParamB_ModRotaryRadius (float(24)): 120.0
+  HWParamB_ModRotarySpread (float(24)): 50.0
+  HWParamB_ModRotaryLevel (float(24)): 5.0
+  HWParamB_DelayPost (tinyint(10)): 1
+  HWParamB_DelayEnable (tinyint(10)): 0
+  HWParamB_DelayModel (tinyint(10)): 0
+  HWParamB_DelayDigitalSync (tinyint(10)): 0
+  HWParamB_DelayDigitalTS (tinyint(10)): 9
+  HWParamB_DelayDigitalTime (float(24)): 350.0
+  HWParamB_DelayDigitalFeedback (float(24)): 20.0
+  HWParamB_DelayDigitalMode (tinyint(10)): 0
+  HWParamB_DelayDigitalMix (float(24)): 50.0
+  HWParamB_DelayTapeSync (tinyint(10)): 0
+  HWParamB_DelayTapeTS (tinyint(10)): 9
+  HWParamB_DelayTapeTime (float(24)): 350.0
+  HWParamB_DelayTapeFeedback (float(24)): 20.0
+  HWParamB_DelayTapeMode (tinyint(10)): 0
+  HWParamB_DelayTapeMix (float(24)): 50.0
+  HWParamB_NoiseGatePost (tinyint(10)): 0
+  HWParamB_NoiseGateEnable (tinyint(10)): 0
+  HWParamB_NoiseGateThreshold (float(24)): -100.0
+  HWParamB_NoiseGateRelease (float(24)): 20.0
+  HWParamB_NoiseGateDepth (float(24)): -60.0
+  HWParamB_ReverbPosition (tinyint(10)): 1
+  HWParamB_ReverbEnable (tinyint(10)): 0
+  HWParamB_ReverbModel (INT): 4
+  HWParamB_ReverbSpring1Time (float(24)): 5.0
+  HWParamB_ReverbSpring1PreDelay (float(24)): 0.0
+  HWParamB_ReverbSpring1Color (float(24)): 0.0
+  HWParamB_ReverbSpring1Mix (float(24)): 0.0
+  HWParamB_ReverbSpring2Time (float(24)): 5.0
+  HWParamB_ReverbSpring2PreDelay (float(24)): 0.0
+  HWParamB_ReverbSpring2Color (float(24)): 0.0
+  HWParamB_ReverbSpring2Mix (float(24)): 0.0
+  HWParamB_ReverbSpring3Time (float(24)): 5.0
+  HWParamB_ReverbSpring3PreDelay (float(24)): 0.0
+  HWParamB_ReverbSpring3Color (float(24)): 0.0
+  HWParamB_ReverbSpring3Mix (float(24)): 0.0
+  HWParamB_ReverbSpring4Time (float(24)): 5.0
+  HWParamB_ReverbSpring4PreDelay (float(24)): 0.0
+  HWParamB_ReverbSpring4Color (float(24)): 0.0
+  HWParamB_ReverbSpring4Mix (float(24)): 0.0
+  HWParamB_ReverbRoomTime (float(24)): 5.0
+  HWParamB_ReverbRoomPreDelay (float(24)): 0.0
+  HWParamB_ReverbRoomColor (float(24)): 0.0
+  HWParamB_ReverbRoomMix (float(24)): 0.0
+  HWParamB_ReverbPlateTime (float(24)): 5.0
+  HWParamB_ReverbPlatePreDelay (float(24)): 0.0
+  HWParamB_ReverbPlateColor (float(24)): 0.0
+  HWParamB_ReverbPlateMix (float(24)): 0.0
+  HWParamB_CabType (INT): 0
+  HWParamB_VIRCabModel (INT): 25
+  HWParamB_VIRCabMic1Model (INT): 0
+  HWParamB_VIRCabMic1X (float(24)): 1.5
+  HWParamB_VIRCabMic1Z (float(24)): 0.0
+  HWParamB_VIRCabMic2Model (INT): 1
+  HWParamB_VIRCabMic2X (float(24)): 1.5
+  HWParamB_VIRCabMic2Z (float(24)): 0.0
+  HWParamB_VIRCabMicBlend (float(24)): 0.0
+  HWParamB_VIRCabResonance (float(24)): 5.0
+  HW_ExtControllerEnable (tinyint(10)): 0
+  Favorite (tinyint(10)): 0
+  
