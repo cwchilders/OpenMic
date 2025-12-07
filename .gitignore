@@ -53,6 +53,9 @@ artifacts/
 output/
 test/
 
+# -- data files
+tonex/data/
+
 # --- Specific Files ---
 # Ignore specific files that may contain sensitive information or are not needed in version control.
 config/API_KEYS.json
