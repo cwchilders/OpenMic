@@ -16,31 +16,37 @@ class OpenMicUSScraper(BaseScraper):
     SOURCE_NAME = "openmic.us"
     BASE_URL = "https://www.openmic.us"
 
-    CITY_DOMAINS = {
-        "boston": "https://www.openmicboston.com",
-        "newyork": "https://www.openmicnewyork.com",
-        "chicago": "https://www.openmicchicago.com",
-        "la": "https://www.openmicla.net",
-        "austin": "https://www.openmicaustin.com",
-        "nashville": "https://www.openmicnashville.com",
-        "denver": "https://www.openmicdenver.com",
-        "seattle": "https://www.openmicseattle.com",
-        "portland": "https://www.openmicportland.com",
-        "atlanta": "https://www.openmicatlanta.com",
-        "panhandle": "https://www.openmicpanhandle.com",
-        "jacksonville": "https://www.openmicjacksonville.com",
-        "savannah": "https://www.openmicsavannah.com",
-        "tallahassee": "https://www.openmictallahassee.com",
-    }
+    @staticmethod
+    def extract_area_code(phone: str) -> str:
+        """Extract 3-digit area code from phone number."""
+        if not phone:
+            return ""
+        # Remove non-digits
+        digits = re.sub(r'\D', '', phone)
+        # Handle +1 prefix
+        if len(digits) == 11 and digits.startswith('1'):
+            digits = digits[1:]
+        # Return first 3 digits
+        return digits[:3] if len(digits) >= 3 else ""
 
-    STATE_MAP = {
-        "boston": "MA", "newyork": "NY", "chicago": "IL", "la": "CA",
-        "austin": "TX", "nashville": "TN", "denver": "CO", "seattle": "WA",
-        "portland": "OR", "atlanta": "GA", "phoenix": "AZ",
-        "dallas": "TX", "houston": "TX", "miami": "FL",
-        "panhandle": "FL", "jacksonville": "FL", "savannah": "GA",
-        "tallahassee": "FL",
-    }
+    def is_local_area_code(self, phone: str) -> bool:
+        """Check if phone number has a local area code per config."""
+        filter_mode = self.config.get("filter_mode", "none")
+        if filter_mode != "area_code":
+            return True  # No filtering
+
+        local_codes = self.config.get("local_area_codes", [])
+        if not local_codes:
+            return True  # No codes configured, allow all
+
+        area_code = self.extract_area_code(phone)
+        return area_code in local_codes
+
+    def get_site_config(self, city: str) -> dict:
+        """Get site URL and state from config for a city."""
+        city_lower = city.lower().replace(" ", "")
+        sites = self.config.get("openmic_us_sites", {})
+        return sites.get(city_lower, {})
 
     def get_main_page_links(self) -> dict:
         """Get all city/state links from the main page."""
@@ -63,14 +69,20 @@ class OpenMicUSScraper(BaseScraper):
 
     def scrape_city(self, city: str) -> List[OpenMicEvent]:
         """Scrape events for a specific city using AJAX endpoints."""
-        city_lower = city.lower().replace(" ", "")
+        site_config = self.get_site_config(city)
 
-        if city_lower in self.CITY_DOMAINS:
-            base_url = self.CITY_DOMAINS[city_lower]
+        if site_config:
+            base_url = site_config.get("url")
+            state = site_config.get("state", "")
         else:
+            # Fallback for unknown cities
+            city_lower = city.lower().replace(" ", "")
             base_url = f"https://www.openmic{city_lower}.com"
+            state = ""
 
-        state = self.STATE_MAP.get(city_lower, "")
+        if not base_url:
+            print(f"  OpenMic.US: no site configured for {city}")
+            return []
 
         # Day mapping for AJAX endpoints
         days = [
@@ -94,6 +106,15 @@ class OpenMicUSScraper(BaseScraper):
 
             events = self._parse_ajax_listings(soup, city.title(), state, day_name)
             all_events.extend(events)
+
+        # Filter by area code if configured
+        filter_mode = self.config.get("filter_mode", "none")
+        if filter_mode == "area_code":
+            before_count = len(all_events)
+            all_events = [e for e in all_events if self.is_local_area_code(e.phone)]
+            filtered = before_count - len(all_events)
+            if filtered > 0:
+                print(f"    (filtered {filtered} non-local area codes)")
 
         return all_events
 
@@ -138,8 +159,9 @@ class OpenMicUSScraper(BaseScraper):
             if venue_name.lower() in skip_names:
                 continue
 
-            # Skip if name looks like a city/state
-            if venue_name.lower() in self.CITY_DOMAINS:
+            # Skip if name looks like a configured city
+            configured_sites = self.config.get("openmic_us_sites", {})
+            if venue_name.lower() in configured_sites:
                 continue
 
             # Extract address

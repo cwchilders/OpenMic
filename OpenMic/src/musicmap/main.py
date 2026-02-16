@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 
 from .aggregator import OpenMicAggregator, display_events
+from .geo import parse_location
 
 
 def main():
@@ -16,11 +17,18 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python -m src.musicmap.main                    # Search with default config
-  python -m src.musicmap.main --radius 50        # Search within 50 miles
-  python -m src.musicmap.main --city Tallahassee --state FL
-  python -m src.musicmap.main --group distance   # Sort by distance instead of day
+  python -m src.musicmap.main                              # Prompts for location
+  python -m src.musicmap.main -l "Chattahoochee, FL"       # Search from location
+  python -m src.musicmap.main -l "Marianna, FL" -r 50      # Within 50 miles
+  python -m src.musicmap.main -l "Dothan, AL" --group distance
         """
+    )
+
+    parser.add_argument(
+        "--location", "-l",
+        type=str,
+        default=None,
+        help="Your current location as 'City, ST' (e.g., 'Chattahoochee, FL')"
     )
 
     parser.add_argument(
@@ -67,6 +75,22 @@ Examples:
 
     args = parser.parse_args()
 
+    # Location is required - prompt if not provided
+    location_str = args.location
+    if not location_str:
+        location_str = input("Where are you? (City, ST): ").strip()
+
+    location = parse_location(location_str)
+    if not location:
+        print(f"Error: Could not resolve location '{location_str}'")
+        print("Format should be 'City, ST' (e.g., 'Chattahoochee, FL')")
+        print("\nKnown locations: Chattahoochee FL, Tallahassee FL, Marianna FL,")
+        print("  Panama City FL, Dothan AL, Bainbridge GA, Albany GA, Atlanta GA")
+        return
+
+    # Initialize aggregator
+    aggregator = OpenMicAggregator(config_path=args.config)
+
     # Build cities list if specified on command line
     cities = None
     if args.city:
@@ -76,11 +100,8 @@ Examples:
             state = states[i] if i < len(states) else ""
             cities.append({"city": city, "state": state})
 
-    # Initialize aggregator
-    aggregator = OpenMicAggregator(config_path=args.config)
-
-    # Search
-    events = aggregator.search(cities=cities, max_distance=args.radius)
+    # Search with location override if provided
+    events = aggregator.search(cities=cities, max_distance=args.radius, location=location)
 
     # Output
     if args.json:

@@ -5,8 +5,8 @@ github_devNetAK
 keys/
 
 # --- Models & Checkpoints ---
-# Exclude large, downloadable model files.
-models/
+# Exclude large, downloadable model files (only at repo root, not nested packages).
+/models/
 *.bin
 *.ckpt
 *.gguf

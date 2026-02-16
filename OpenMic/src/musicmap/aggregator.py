@@ -38,6 +38,7 @@ class OpenMicAggregator:
         self,
         cities: Optional[List[dict]] = None,
         max_distance: Optional[float] = None,
+        location: Optional[tuple] = None,
     ) -> List[OpenMicEvent]:
         """
         Search for open mic events.
@@ -47,6 +48,7 @@ class OpenMicAggregator:
                    If None, uses config's search_cities.
             max_distance: Max distance in miles from home_location.
                          If None, uses config's max_distance_miles.
+            location: Optional (city, state, lat, lon) tuple to override home_location.
 
         Returns:
             List of OpenMicEvent, deduplicated and sorted by distance.
@@ -59,12 +61,16 @@ class OpenMicAggregator:
         if max_distance is None:
             max_distance = self.config.get("max_distance_miles", 100)
 
-        # Get home location
-        home = self.config.get("home_location", {})
-        home_lat = home.get("lat")
-        home_lon = home.get("lon")
+        # Get location (override or from config)
+        if location:
+            home_city, home_state, home_lat, home_lon = location
+        else:
+            home = self.config.get("home_location", {})
+            home_city = home.get("city", "home")
+            home_lat = home.get("lat")
+            home_lon = home.get("lon")
 
-        print(f"\nSearching for open mics within {max_distance} miles of {home.get('city', 'home')}...\n")
+        print(f"\nSearching for open mics within {max_distance} miles of {home_city}...\n")
 
         all_events = []
 

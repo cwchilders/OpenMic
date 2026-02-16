@@ -38,12 +38,14 @@ CITY_COORDS = {
     ("thomasville", "ga"): (30.8366, -83.9788),
 
     # Florida
+    ("chattahoochee", "fl"): (30.7052, -84.8457),
     ("tallahassee", "fl"): (30.4383, -84.2807),
     ("panama city", "fl"): (30.1588, -85.6602),
     ("jacksonville", "fl"): (30.3322, -81.6557),
     ("gainesville", "fl"): (29.6516, -82.3248),
     ("pensacola", "fl"): (30.4213, -87.2169),
     ("destin", "fl"): (30.3935, -86.4958),
+    ("marianna", "fl"): (30.7743, -85.2269),
 
     # Alabama
     ("dothan", "al"): (31.2232, -85.3905),
@@ -55,6 +57,29 @@ CITY_COORDS = {
     ("houston", "tx"): (29.7604, -95.3698),
     ("dallas", "tx"): (32.7767, -96.7970),
 }
+
+
+def parse_location(location_str: str) -> Optional[Tuple[str, str, float, float]]:
+    """
+    Parse location string like 'Chattahoochee, FL' into (city, state, lat, lon).
+    Returns None if location cannot be resolved.
+    """
+    if not location_str:
+        return None
+
+    # Parse "City, ST" format
+    match = re.match(r'^\s*([^,]+),\s*([A-Za-z]{2})\s*$', location_str)
+    if not match:
+        return None
+
+    city = match.group(1).strip()
+    state = match.group(2).strip().upper()
+
+    coords = get_city_coords(city, state)
+    if coords:
+        return (city, state, coords[0], coords[1])
+
+    return None
 
 
 def get_city_coords(city: str, state: str) -> Optional[Tuple[float, float]]:
